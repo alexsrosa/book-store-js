@@ -1,8 +1,8 @@
 const sqlite3 = require('sqlite3').verbose();
 const bd = new sqlite3.Database('data.db');
 
-const USUARIOS_SCHEMA = `
-CREATE TABLE IF NOT EXISTS usuarios (
+const USERS_SCHEMA = `
+CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT, 
     nome_completo VARCHAR(40) NOT NULL UNIQUE, 
     email VARCHAR(255) NOT NULL, 
@@ -10,53 +10,53 @@ CREATE TABLE IF NOT EXISTS usuarios (
 )
 `;
 
-const INSERIR_USUARIO_1 =
+const INSERIR_USER_1 =
     `
-INSERT INTO usuarios (
+INSERT INTO users (
     nome_completo, 
     email,
     senha
-) SELECT 'Gabriel Leite', 'gabriel@alura.com.br', '123' WHERE NOT EXISTS (SELECT * FROM usuarios WHERE email = 'gabriel@alura.com.br')
+) SELECT 'Alex S. Rosa', 'alexsros@gmail.com', '123' WHERE NOT EXISTS (SELECT * FROM users WHERE email = 'alexsros@gmail.com')
 `;
 
-const LIVROS_SCHEMA =
+const BOOKS_SCHEMA =
     `
-CREATE TABLE IF NOT EXISTS livros (
+CREATE TABLE IF NOT EXISTS books (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    titulo TEXT NOT NULL, 
+    title TEXT NOT NULL, 
     preco REAL NOT NULL,
     descricao TEXT DEFAULT ('') NOT NULL
 )
 `;
 
-const INSERIR_LIVRO_1 =
+const INSERIR_BOOK_1 =
     `
-INSERT INTO livros (
-    titulo,
+INSERT INTO books (
+    title,
     preco,
     descricao
-) SELECT 'Node na prática', 30.0, 'Como desenvolver com Node.' WHERE NOT EXISTS (SELECT * FROM livros WHERE titulo = 'Node na prática')
+) SELECT 'Node na prática', 30.0, 'Como desenvolver com Node.' WHERE NOT EXISTS (SELECT * FROM books WHERE title = 'Node na prática')
 `;
 
-const INSERIR_LIVRO_2 =
+const INSERIR_BOOK_2 =
     `
-INSERT INTO livros (
-    titulo, 
+INSERT INTO books (
+    title, 
     preco,
     descricao
-) SELECT 'JavaScript na prática', 40.0, 'Como desenvolver com JavaScript.' WHERE NOT EXISTS (SELECT * FROM livros WHERE titulo = 'JavaScript na prática')
+) SELECT 'JavaScript na prática', 40.0, 'Como desenvolver com JavaScript.' WHERE NOT EXISTS (SELECT * FROM books WHERE title = 'JavaScript na prática')
 `;
 
 bd.serialize(() => {
     bd.run("PRAGMA foreign_keys=ON");
-    bd.run(USUARIOS_SCHEMA);
-    bd.run(INSERIR_USUARIO_1);
-    bd.run(LIVROS_SCHEMA);
-    bd.run(INSERIR_LIVRO_1);
-    bd.run(INSERIR_LIVRO_2);
+    bd.run(USERS_SCHEMA);
+    bd.run(INSERIR_USER_1);
+    bd.run(BOOKS_SCHEMA);
+    bd.run(INSERIR_BOOK_1);
+    bd.run(INSERIR_BOOK_2);
 
-    bd.each("SELECT * FROM usuarios", (err, usuario) => {
-        console.log('Usuario: ');
+    bd.each("SELECT * FROM users", (err, usuario) => {
+        console.log('User: ');
         console.log(usuario);
     });
 });

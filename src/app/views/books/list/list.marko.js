@@ -2,7 +2,7 @@
 "use strict";
 
 var marko_template = module.exports = require("marko/src/html").t(__filename),
-    marko_componentType = "/book-store-js$1.0.0/src/app/views/livros/lista/lista.marko",
+    marko_componentType = "/book-store-js$1.0.0/src/app/views/books/list/list.marko",
     components_helpers = require("marko/src/components/helpers"),
     marko_renderer = components_helpers.r,
     marko_defineComponent = components_helpers.c,
@@ -21,17 +21,17 @@ function render(input, out, __component, component, state) {
 
   component_globals_tag({}, out);
 
-  out.w("<h1> Listagem de livros </h1><table><tr><td>ID</td><td>Título</td></tr>");
+  out.w("<h1> Booklist</h1><table><tr><td>ID</td><td>Title</td></tr>");
 
   var for__9 = 0;
 
-  marko_forEach(data.livros, function(livro) {
+  marko_forEach(data.books, function(book) {
     var keyscope__10 = "[" + ((for__9++) + "]");
 
     out.w("<tr><td>" +
-      marko_escapeXml(livro.id) +
+      marko_escapeXml(book.id) +
       "</td><td>" +
-      marko_escapeXml(livro.titulo) +
+      marko_escapeXml(book.title) +
       "</td></tr>");
   });
 
@@ -52,7 +52,7 @@ marko_template._ = marko_renderer(render, {
 marko_template.Component = marko_defineComponent({}, marko_template._);
 
 marko_template.meta = {
-    id: "/book-store-js$1.0.0/src/app/views/livros/lista/lista.marko",
+    id: "/book-store-js$1.0.0/src/app/views/books/list/list.marko",
     tags: [
       "marko/src/components/taglib/component-globals-tag",
       "marko/src/components/taglib/init-components-tag",
