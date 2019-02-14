@@ -24,8 +24,8 @@ const BOOKS_SCHEMA =
 CREATE TABLE IF NOT EXISTS books (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     title TEXT NOT NULL, 
-    preco REAL NOT NULL,
-    descricao TEXT DEFAULT ('') NOT NULL
+    price REAL NOT NULL,
+    description TEXT DEFAULT ('') NOT NULL
 )
 `;
 
@@ -33,8 +33,8 @@ const INSERIR_BOOK_1 =
     `
 INSERT INTO books (
     title,
-    preco,
-    descricao
+    price,
+    description
 ) SELECT 'Node na prática', 30.0, 'Como desenvolver com Node.' WHERE NOT EXISTS (SELECT * FROM books WHERE title = 'Node na prática')
 `;
 
@@ -42,8 +42,8 @@ const INSERIR_BOOK_2 =
     `
 INSERT INTO books (
     title, 
-    preco,
-    descricao
+    price,
+    description
 ) SELECT 'JavaScript na prática', 40.0, 'Como desenvolver com JavaScript.' WHERE NOT EXISTS (SELECT * FROM books WHERE title = 'JavaScript na prática')
 `;
 

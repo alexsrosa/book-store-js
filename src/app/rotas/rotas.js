@@ -28,4 +28,26 @@ module.exports = (app) => {
             ))
             .catch(erro => console.log(erro));
     });
+
+    app.get('/books/form', function(req, resp) {
+        resp.marko(require('../views/books/form/form.marko'))
+    });
+
+    app.get('/books/:id', function(req, resp) {
+        const bookDao = new BookDao(db);
+        bookDao.findOne(req.params.id)
+            .then(bookFindOne => resp.redirect(
+                require('../views/books/form/form.marko'), {
+                    book: bookFindOne
+                }
+            ))
+            .catch(erro => console.log(erro));
+    });
+
+    app.post('/books', function(req, resp) {
+        const bookDao = new BookDao(db);
+        bookDao.insert(req.body)
+            .then(resp.redirect('/books'))
+            .catch(erro => console.log(erro));
+    });
 };
