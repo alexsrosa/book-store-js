@@ -30,24 +30,45 @@ module.exports = (app) => {
     });
 
     app.get('/books/form', function(req, resp) {
-        resp.marko(require('../views/books/form/form.marko'))
-    });
-
-    app.get('/books/:id', function(req, resp) {
-        const bookDao = new BookDao(db);
-        bookDao.findOne(req.params.id)
-            .then(bookFindOne => resp.redirect(
-                require('../views/books/form/form.marko'), {
-                    book: bookFindOne
-                }
-            ))
-            .catch(erro => console.log(erro));
+        resp.marko(require('../views/books/form/form.marko'), { book: {} })
     });
 
     app.post('/books', function(req, resp) {
         const bookDao = new BookDao(db);
+
         bookDao.insert(req.body)
             .then(resp.redirect('/books'))
+            .catch(erro => console.log(erro));
+    });
+
+    app.put('/books', function(req, resp) {
+        const bookDao = new BookDao(db);
+
+        bookDao.update(req.body)
+            .then(resp.redirect('/books'))
+            .catch(erro => console.log(erro));
+    });
+
+    app.delete('/books/:id', function(req, resp) {
+        const id = req.params.id;
+
+        const bookDao = new BookDao(db);
+        bookDao.remove(id)
+            .then(() => resp.status(200).end())
+            .catch(erro => console.log(erro));
+
+    });
+
+    app.get('/books/form/:id', function(req, resp) {
+        const id = req.params.id;
+        const bookDao = new BookDao(db);
+
+        bookDao.findOne(id)
+            .then(book =>
+                resp.marko(
+                    require('../views/books/form/form.marko'), { book: book }
+                )
+            )
             .catch(erro => console.log(erro));
     });
 };

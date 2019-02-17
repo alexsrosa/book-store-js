@@ -51,14 +51,13 @@ class BookDao {
         });
     };
 
-    remove(book) {
+    remove(bookId) {
         return new Promise((resolve, reject) => {
             this._db.get(
-                `
-                    DELETE 
+                `   DELETE 
                     FROM books
                     WHERE id = ?
-                `, [id],
+                `, [bookId],
                 (err) => {
                     if (err) {
                         return reject('Could not remove book!');
